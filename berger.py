@@ -45,5 +45,3 @@ def codify(a):
 	final_number = complement(final_number)
 	return final_number
 
-def decodify(a):
-
