@@ -28,13 +28,10 @@ def printoutputfile(i, j, k, matrix):
 	f = open('output.txt', 'r')
 	line = f.readlines()
 	line1 = line[0]
-	print "El fichero es: " + str(line)
 	f.close()
 	f = open('output.txt', 'r')
 	line2 = f.readlines()[1]
 	f.close()
-	print "Line 1: " + str(line1)
-	print "Line 2: " + str(line2)
 	f = open('output.txt', 'w')
 	f.write(str(line1))
 	f.write(str(line2))
@@ -44,21 +41,53 @@ def printoutputfile(i, j, k, matrix):
 	f.write(str(matrix))
 	f.close()
 
-
-def multiply():
-	a = receiveinput()
-	(matrix1, matrix2) = randommatrix(a[0], a[1])
+def readinformation():	
+	f = open('output.txt', 'r')
+	line = f.readlines()
+	matrix1 = line[0]
+	matrix2 = line[1]
+	i = line[2]
+	j = line[3]
+	k = line[4]
+	mul = line[5]
+	return(matrix1,matrix2,i,j,k,mul)
+def multiply(flag):
+	if (flag == 1):
+		a = receiveinput()
+		(matrix1, matrix2) = randommatrix(a[0], a[1])
+	else:
+		a = readinformation()
+		matrix1 = eval(a[0])
+		matrix2 = eval(a[1])
+		i = int(a[2])
+		j = int(a[3])
+		k = int(a[4])
+		mult = eval(a[5])
+		print "MATRIX1[0][0]: "
+		print type(matrix1)
+		print "MATRIX2[0][0]: "
+		print type(matrix2)
 	r1 = len(matrix1)
 	c1 = len(matrix1[0])
 	r2 = len(matrix2)
 	c2 = len(matrix2[0])
-	mult = [[0 for _ in range(c1)] for _ in range(r2)]
+	if (flag == 1):
+		mult = [[0 for _ in range(c1)] for _ in range(r2)]
 	for i in range(r1):
 		for j in range(c2):
 			for k in range(r2):
 				mult[i][j] += matrix1[i][k] * matrix2[k][j]
 		printoutputfile(i, j, k, mult)
+	print "FINAL: " + str(mult)
 
 def main():
-	multmat = multiply()
+	print "1.- Start a new operation\n"
+	print "2.- Start from the checkpoint\n"
+	foo = 0
+	while (foo != 1 and foo != 2):
+		foo = input("Please enter a value: ")
+	if (foo == 1):
+		multiply(1)
+	else:
+		multiply(2)
 	
