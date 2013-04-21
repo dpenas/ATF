@@ -14,8 +14,8 @@ def randommatrix(x, y):
 		for number2 in range(y):
 			matrix1[number2][number1] = randint(0,10) # both inclusive
 			matrix2[number2][number1] = randint(0,10) # both inclusive	
-	print "First matrix: " + str(matrix1)
-	print "Second matrix: " + str(matrix2)
+#	print "First matrix: " + str(matrix1)
+#	print "Second matrix: " + str(matrix2)
 	f = open('output.txt', 'w')
 	f.write(str(matrix1))
 	f.write("\n")
@@ -55,6 +55,10 @@ def multiply(flag):
 	if (flag == 1):
 		a = receiveinput()
 		(matrix1, matrix2) = randommatrix(a[0], a[1])
+		print "Random matrix selected\n"
+		i = 0
+		j = 0
+		k = 0
 	else:
 		a = readinformation()
 		matrix1 = eval(a[0])
@@ -63,21 +67,19 @@ def multiply(flag):
 		j = int(a[3])
 		k = int(a[4])
 		mult = eval(a[5])
-		print "MATRIX1[0][0]: "
-		print type(matrix1)
-		print "MATRIX2[0][0]: "
-		print type(matrix2)
+		print "Restarting the operation from this matrix: "
+		print str(mult)
 	r1 = len(matrix1)
 	c1 = len(matrix1[0])
 	r2 = len(matrix2)
 	c2 = len(matrix2[0])
 	if (flag == 1):
 		mult = [[0 for _ in range(c1)] for _ in range(r2)]
-	for i in range(r1):
-		for j in range(c2):
-			for k in range(r2):
-				mult[i][j] += matrix1[i][k] * matrix2[k][j]
-		printoutputfile(i, j, k, mult)
+	for a in range(i,r1):
+		for b in range(j, c2):
+			for c in range(k, r2):
+				mult[a][b] += matrix1[a][c] * matrix2[c][b]
+		printoutputfile(a, b, c, mult)
 	print "FINAL: " + str(mult)
 
 def main():
