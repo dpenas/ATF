@@ -7,15 +7,17 @@ def receiveinput():
 	y = input("Enter the number of rows: ")
 	return (x,y)
 
-def randommatrix(x, y):
-	matrix1 = [[0 for _ in range(x)] for _ in range(y)]
-	matrix2 = [[0 for _ in range(x)] for _ in range(y)]
-	for number1 in range(x):
-		for number2 in range(y):
+def randommatrix(x1, y1, x2, y2):
+	matrix1 = [[0 for _ in range(x1)] for _ in range(y1)]
+	matrix2 = [[0 for _ in range(x2)] for _ in range(y2)]
+	for number1 in range(x1):
+		for number2 in range(y1):
 			matrix1[number2][number1] = randint(0,10) # both inclusive
-			matrix2[number2][number1] = randint(0,10) # both inclusive	
-#	print "First matrix: " + str(matrix1)
-#	print "Second matrix: " + str(matrix2)
+	for numbersecond1 in range(x2):
+		for numbersecond2 in range(y2):
+			matrix2[numbersecond2][numbersecond1] = randint(0,10) # both inclusive	
+	print "First matrix: " + str(matrix1)
+	print "Second matrix: " + str(matrix2)
 	f = open('output.txt', 'w')
 	f.write(str(matrix1))
 	f.write("\n")
@@ -51,10 +53,18 @@ def readinformation():
 	k = line[4]
 	mul = line[5]
 	return(matrix1,matrix2,i,j,k,mul)
+
 def multiply(flag):
+	count1 = 0
+	count2 = 0
+	count3 = 0
 	if (flag == 1):
 		a = receiveinput()
-		(matrix1, matrix2) = randommatrix(a[0], a[1])
+		b = receiveinput()
+		if (a[0] != b[1]):
+			print("The rows and columns don't match. Please enter a correct matrix")
+			exit(0)
+		(matrix1, matrix2) = randommatrix(a[0], a[1], b[0], b[1])
 		print "Random matrix selected\n"
 		i = 0
 		j = 0
@@ -67,19 +77,42 @@ def multiply(flag):
 		j = int(a[3])
 		k = int(a[4])
 		mult = eval(a[5])
+		print "Here are the first values:"
+		print matrix1
+		print matrix2
+		print i
+		print j
+		print k
+		print mult
 		print "Restarting the operation from this matrix: "
 		print str(mult)
 	r1 = len(matrix1)
 	c1 = len(matrix1[0])
 	r2 = len(matrix2)
 	c2 = len(matrix2[0])
+	print "r1: " + str(r1)
+	print "c1: " + str(c1)
+	print "r2: " + str(r2)
+	print "c2: " + str(c2)
 	if (flag == 1):
-		mult = [[0 for _ in range(c1)] for _ in range(r2)]
+		mult = [[0 for _ in range(c2)] for _ in range(r1)]
+	print mult
 	for a in range(i,r1):
+		count1 = count1 + 1
 		for b in range(j, c2):
 			for c in range(k, r2):
 				mult[a][b] += matrix1[a][c] * matrix2[c][b]
-		printoutputfile(a, b, c, mult)
+				print "Valor de r1: \n" + str(r1)
+				print "Valor de c1: \n" + str(c1)
+				print "Valor de r2: \n" + str(r2)
+				print "Valor de c2: \n" + str(c2)
+				print "Valor de j: \n" + str(j)
+				print "Valor de k: \n" + str(k)
+				print "Valor de a: \n" + str(a)
+				print "Valor de b: \n" + str(b)
+				print "Valor de c: \n" + str(c)
+				sys.stdin.read(1)
+		printoutputfile(count1, 0, 0, mult)
 	print "FINAL: " + str(mult)
 
 def main():
