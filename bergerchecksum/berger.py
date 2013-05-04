@@ -43,5 +43,18 @@ def codify(a):
 			final_number = final_number + "0"
 	final_number = final_number + num_bin
 	final_number = complement(final_number)
+	final_number = a + final_number
 	return final_number
 
+def numberofbergerscode(lengthnumber, it):
+	number_comparison = 0
+	it = 0
+	while(lengthnumber >= 2**it):
+		it = it + 1
+	it = it - 1
+	print "La iteracion es: " + str(it)
+	if (lengthnumber-it-1 >= 2**(it)):
+		return it+1
+	else: 
+		return it
+	
