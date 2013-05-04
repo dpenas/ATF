@@ -24,17 +24,27 @@ def randommatrix(x1, y1, x2, y2):
 	f.write(str(matrix2))
 	f.write("\n")
 	f.close()
+	f = open ('output1.txt', 'w')
+	f.write(str(matrix1))
+	f.write("\n")
+	f.write(str(matrix2))
+	f.write("\n")
+	f.close()
 	return (matrix1, matrix2)
 
-def printoutputfile(i, j, k, matrix):
-	f = open('output.txt', 'r')
+def printoutputfile(i, j, k, matrix, flag):
+	if (flag == 1):
+		ficherosalida = 'output.txt'
+	else:
+		ficherosalida = 'output1.txt'
+	f = open(ficherosalida, 'r')
 	line = f.readlines()
 	line1 = line[0]
 	f.close()
-	f = open('output.txt', 'r')
+	f = open(ficherosalida, 'r')
 	line2 = f.readlines()[1]
 	f.close()
-	f = open('output.txt', 'w')
+	f = open(ficherosalida, 'w')
 	f.write(str(line1))
 	f.write(str(line2))
 	f.write(str(i) + "\n")
@@ -43,8 +53,12 @@ def printoutputfile(i, j, k, matrix):
 	f.write(str(matrix))
 	f.close()
 
-def readinformation():	
-	f = open('output.txt', 'r')
+def readinformation(outputfile):
+	if (outputfile == 0):
+		outputfile = 'output.txt'
+	else:
+		outputfile = 'output1.txt'
+	f = open(outputfile, 'r')
 	line = f.readlines()
 	matrix1 = line[0]
 	matrix2 = line[1]
@@ -54,7 +68,7 @@ def readinformation():
 	mul = line[5]
 	return(matrix1,matrix2,i,j,k,mul)
 
-def multiply(flag):
+def multiply(flag, outputfile):
 	count1 = 0
 	count2 = 0
 	count3 = 0
@@ -70,7 +84,7 @@ def multiply(flag):
 		j = 0
 		k = 0
 	else:
-		a = readinformation()
+		a = readinformation(outputfile)
 		matrix1 = eval(a[0])
 		matrix2 = eval(a[1])
 		i = int(a[2])
@@ -112,7 +126,11 @@ def multiply(flag):
 				print "Valor de b: \n" + str(b)
 				print "Valor de c: \n" + str(c)
 				sys.stdin.read(1)
-		printoutputfile(count1, 0, 0, mult)
+		if(outputfile == 0):
+			outputfile = 1
+		else:
+			outputfile = 0
+		printoutputfile(count1, 0, 0, mult, outputfile)
 	print "FINAL: " + str(mult)
 
 def main():
@@ -122,7 +140,15 @@ def main():
 	while (foo != 1 and foo != 2):
 		foo = input("Please enter a value: ")
 	if (foo == 1):
-		multiply(1)
+		multiply(1, 0)
 	else:
-		multiply(2)
-	
+		print "Select the file you want to recover the information from:"
+		print "1.- Recover from the first file"
+		print "2.- Recover from the second file"
+		foo = 0
+		while (foo != 1 and foo != 2):
+			foo = input("Please enter a value: ")
+		if (foo == 0):
+			multiply(2, 0)
+		else:
+			multiply(2, 1)
