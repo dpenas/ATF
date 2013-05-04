@@ -40,7 +40,7 @@ def sum_wordsright (b, d):
 	return "".join(result)
 
 def codify(a, b, c, d):
-	left = sum_wordsleft(a,c)
-	right = sum_wordsright(b,d)
+	right = sum_wordsright(a,c)
+	left = sum_wordsleft(b,d)
 	final = left + right
 	return final
