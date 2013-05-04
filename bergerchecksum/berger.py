@@ -46,8 +46,7 @@ def codify(a):
 	final_number = a + final_number
 	return final_number
 
-def numberofbergerscode(lengthnumber, it):
-	number_comparison = 0
+def numberofbergerscode(lengthnumber):
 	it = 0
 	while(lengthnumber >= 2**it):
 		it = it + 1
@@ -57,4 +56,19 @@ def numberofbergerscode(lengthnumber, it):
 		return it+1
 	else: 
 		return it
-	
+
+def istherecorrespondence(originalnumber, numberofones):
+	for digit in range(len(originalnumber)):
+		if(originalnumber[digit] == '1'):
+			numberofones = numberofones - 1
+	return numberofones
+
+def decodify(number):
+	numberger = numberofbergerscode(len(number))
+	berger = number[len(number)-numberger:]
+	originalnumber = number[:len(number)-numberger]
+	numberofones = int(complement(berger), 2)
+	if (istherecorrespondence(originalnumber, numberofones) == 0):
+		print "The number is correct\n"
+	else:
+		print "The number is incorrect\n"	
