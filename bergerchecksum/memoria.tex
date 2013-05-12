@@ -22,7 +22,7 @@
 		\begin{center}
 
 			\HRule \\[0.4cm]
-			{ \huge \bfseries Memoria Berger y Checksum Honey}\\[0.4cm]
+			{ \huge \bfseries Memoria Berger y Checksum Honeywell}\\[0.4cm]
 			\HRule \\[0cm]
 
 			\vspace{1cm}
@@ -46,12 +46,22 @@
 
 \section{Introducción}
 	Uno de los errores más comunes en los sistemas informáticos son aquellos causados por los canales de comunicación entre los diferentes componentes de un ordenador o, incluso, entre ordenadores, y que causan que los resultados obtenidos no sean válidos por el cambio de uno o varios bits con respecto del original. Para intentar disminuir este tipo de errores se han generado diferentes técnicas, más o menos redundantes, que intentan disminuir la probabilidad de que se cometan alguno de estos fallos.
-	Las aquí comentadas serán el Checksum Honey y los códigos de Berger, cada uno con sus ventajas e inconvenientes.
+	Las aquí comentadas serán el Checksum Honeywell y los códigos de Berger, cada uno con sus ventajas e inconvenientes.
 
 \section{Código de Berger}
+	Los códigos de Berger se tratan de una forma sencilla pero eficaz de detectar errores. Su idea está en añadir un número adicionales de bits, separables del original, en el que vaya la información del número de unos que hay en los bits originales a transmitir. De esta manera el receptor podrá decodificar este número y ver si coincide con el entregado.
 
 
+\section{Checksum Honeywell}
 
-\section{Checksum Honey}
+	La forma de actuar de este algoritmo es la siguiente: el emisor transmite cuatro bytes, que sumará de dos en dos y coloca uno de los resultados a la derecha y otro a la izquierda, obteniendo así 8 bits. Esto se suma, a su vez, con una serie de bits base que decidimos nosotros.
+	El receptor actúa de la misma forma, coge las cuatro palabras de cuatro bits que recibe y las suma de la misma manera que la anteriormente mencionada. Luego se compara el enviado y el recibido y se mira si el resultado es o no el mismo. De esta manera, a pesar de que todavía se pueden dar casos en los que un fallo sea dado por bueno, reducimos radicalmente la probabilidad de que esto suceda y evitamos que un fallo constante en un mismo bit sea pasado por alto.
+	
+\section{Comparación entre ambos}
 
+El checksum de Honeywell se trata de una buena manera de detectar fallos. Sin embargo, este algoritmo requiere un gran coste, dado que para transnmitir 4 palabras estamos realizando cuatro sumas además de la transmisión de 8 bits adicionales y una comparación añadida, algo que no en todos los casos nos podemos permitir el lujo de tener.
+	De todas formas, su rango de detección es mayor que el de Berger a pesar de que el número de cálculos a realizar también sea más elevado.
+
+Los códigos de Berger, por su parte, \texttt{juegan} con la ventaja de que son separables del original, por lo que su codificación y descodificación es mucho más sencilla, además de que son capaces de detectar errores múltiples unidireccionales. El problema radica en que la probabilidad de que un error sea pasado por alto es mayor que en el Checksum Honey 
+	
 \end{document}
