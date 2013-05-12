@@ -1,0 +1,74 @@
+\documentclass[a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{graphics}
+\usepackage{multicol}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\title{Resolución de problemas con lógica difusa. Segunda Entrega}
+
+
+\begin{document}
+
+% Título
+	\begin{titlepage}
+		\begin{center}
+
+			\HRule \\[0.4cm]
+			{ \huge \bfseries Memoria Checkpoint}\\[0.4cm]
+			\HRule \\[0cm]
+
+			\vspace{1cm}
+			\textsc{\Large Arquitecturas tolerantes a fallos}\\[0.5cm]
+			\textsc{\Large Curso 2012/2013}\\[0.5cm]
+		\end{center}
+
+		\vfill
+		\hfill
+		\emph{Autor:}
+		\vspace{0.5cm}
+		\\  
+		\vspace{0.1cm}
+		\hfill Penas Sabín, Darío \texttt{<dario.penas@udc.es>}\\
+		\vspace{0.1cm}
+
+	\end{titlepage}
+% Índices
+\tableofcontents
+\clearpage
+
+\section{Introducción}
+	
+	En los sistemas tolerantes a fallos no nos podemos permitir el \texttt{lujo} de perder información o tener que retomar desde el principio una operación cuyo coste es muy elevado, dado que eso podría provocar una gran pérdida temporal y económica que pocas veces nos podremos permitir.
+	Este es el motivo principal por el que la creación de checkpoints (ficheros que almacenamos en un dispositivo secundario al que podemos acudir para obtener la información necesaria para poder retomar la operación en un punto concreto), es vital en este tipo de sistemas.
+	Hay que tener en cuenta que estos checkpoints no nos salen \texttt{gratis}. Tener en nuestro sistema de esta técnica conlleva tener que escribir, posiblemente, en disco durante una vez por cada serie de iteraciones, lo que puede ser costoso temporalmente e incluso inviable si el espacio de almacenamiento del que disponemos no es suficiente. Esta es la razón por la que hay que analizar el problema previamente para determinar si nos es o no aconsejable su uso y cómo es la manera más eficiente de realizarlo.
+	
+\section{Implementación}
+
+	En este caso he considerado que no era necesaria la creación de un checkpoint por cada valor calculado de la matriz (lo que supondría tener que escribir en disco en cada una de las iteraciones del bucle), así que he optado porque solamente se escriban los resultados una vez en cada bucle externo, lo que prácticamente no afecta al resultado temporal con valores relativamente pequeños.
+	
+	En el aspecto del consumo de memoria sí que es algo a considerar, dado que siempre guardo cinco cosas: los valores de las variables usadas en las iteraciones (para saber en qué momento debemos de continuar una vez reanudado el bucle, lo que también supondría poder introducir el checkpoint en el otro punto del bucle si consideramos necesario), las matrices iniciales y la matriz actual en la que estamos obteniendo el resultado.
+	
+	\newpage
+	\begin{figure}[h!]
+			\centering
+			\includegraphics[width=0.7\textwidth]{tabla}
+			\caption{Consumo de memoria}
+	\end{figure}
+	
+	Es esta matriz la que ocasiona el problema más grande, dado que crece de manera exponencial y, por lo tanto, también lo hace el propio fichero donde guardamos la información relativa a ella. Esto puede incluso llegar a ser un problema si sobrepasamos el límite de memoria del fichero o si no podemos llegar a almacenar la matriz en memoria, lo que ralentizaría bastante el resultado en general de la aplicación.
+	 Por si fuera poco, al ir realizando la práctica me he dado cuenta de que si el sistema fallara en el momento en el que estamos escribiendo el fichero (lo cual no es nada improbable dado el tiempo que podría tardar con valores de millones de elementos en la matriz), éste quedaría corrupto y no podría servir para recuperar la información de él, lo que sería una mala implementación. Por lo tanto, he decidido crear dos ficheros diferente por cada iteración que toque escribir, de tal modo que si mientras estamos escribiendo en uno, éste se corrompe, siempre podremos recuperar la información de el otro que, a pesar de estar en una iteración anterior, nos sirve para no perder todo lo que hemos llevado a cabo hasta el momento. El principal problema de esto es el almacenamiento, dado que significaría duplicar el espacio necesario para almacenar ambos archivos en disco.
+	 
+\newpage
+
+\section{Conclusión}
+
+	En este caso, utilizar un checkpoint es altamente recomendable independientemente de los inconvenientes que pueda tener porque el tiempo que le puede llevar al sistema recalcular todo puede ser inmenso. Hay que tener en cuenta que si tenemos matrices enormes, al tener tres bucles ejecutándose, el tiempo que puede llevar en calcular un solo valor puede ser muy elevado, por lo que es completamente necesario tener una buena implementación de un método como el creado a pesar de que, seguramente, no sea el óptimo.
+\end{document}
