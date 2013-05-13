@@ -49,7 +49,7 @@
 	Las aquí comentadas serán el Checksum Honeywell y los códigos de Berger, cada uno con sus ventajas e inconvenientes.
 
 \section{Código de Berger}
-	Los códigos de Berger se tratan de una forma sencilla pero eficaz de detectar errores. Su idea está en añadir un número adicionales de bits, separables del original, en el que vaya la información del número de unos que hay en los bits originales a transmitir. De esta manera el receptor podrá decodificar este número y ver si coincide con el entregado.
+	Los códigos de Berger se tratan de una forma sencilla pero eficaz de detectar errores. Su idea está en añadir un número adicionales de bits, separables del original, en el que vaya la información del número de unos que hay en los bits originales a transmitir. De esta manera, el receptor podrá decodificar este número y ver si coincide con el entregado.
 
 
 \section{Checksum Honeywell}
@@ -62,6 +62,6 @@
 El checksum de Honeywell se trata de una buena manera de detectar fallos. Sin embargo, este algoritmo requiere un gran coste, dado que para transnmitir 4 palabras estamos realizando cuatro sumas además de la transmisión de 8 bits adicionales y una comparación añadida, algo que no en todos los casos nos podemos permitir el lujo de tener.
 	De todas formas, su rango de detección es mayor que el de Berger a pesar de que el número de cálculos a realizar también sea más elevado.
 
-Los códigos de Berger, por su parte, \texttt{juegan} con la ventaja de que son separables del original, por lo que su codificación y descodificación es mucho más sencilla, además de que son capaces de detectar errores múltiples unidireccionales. El problema radica en que la probabilidad de que un error sea pasado por alto es mayor que en el Checksum Honey 
+Los códigos de Berger, por su parte, \texttt{juegan} con la ventaja de que son separables del original, por lo que su codificación y descodificación es mucho más sencilla, además de que son capaces de detectar errores múltiples unidireccionales. El problema radica en que la probabilidad de que un error sea pasado por alto es mayor que en el Checksum Honey.
 	
 \end{document}
